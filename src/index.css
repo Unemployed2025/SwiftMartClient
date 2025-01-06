@@ -1,0 +1,52 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+::selection {
+  background-color: #f0ead2;
+  color: black; /* Optional: to ensure the text is readable */
+}
+
+section ::selection {
+  background-color: #f0ead2;
+  color: black; /* Optional: to ensure the text is readable */
+}
+
+.hover-underline {
+  position: relative;
+  cursor: pointer;
+}
+
+.hover-underline::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background-color: black;
+  transition: width 0.3s ease;
+}
+
+.hover-underline:hover::after {
+  width: 100%;
+}
+.hover-underline-for-links {
+  position: relative;
+  cursor: pointer;
+}
+
+.hover-underline-for-links::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0%;
+  height: 1px;
+  background-color: black;
+  transition: width 0.3s ease;
+}
+
+.hover-underline-for-links:hover::after {
+  width: 100%;
+}

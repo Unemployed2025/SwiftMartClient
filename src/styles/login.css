@@ -1,0 +1,47 @@
+@keyframes gradient-animation {
+    0% {
+        background-position: 0% 50%;
+    }
+    25% {
+        background-position: 50% 0%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    75% {
+        background-position: 50% 100%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+@keyframes hue-rotate {
+    0% {
+        filter: hue-rotate(0deg);
+    }
+    50% {
+        filter: hue-rotate(180deg);
+    }
+    100% {
+        filter: hue-rotate(360deg);
+    }
+}
+
+.background {
+    background: linear-gradient(200deg,#ffbe0b, #ffdd32, #ff006e, #8338ec, #3a86ff);
+    background-size: 150% 150%;
+    animation: gradient-animation 7s ease infinite, hue-rotate 10s linear infinite;
+}
+
+.form {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 45px;
+    background: rgba(255, 255, 255, 0.623);
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
