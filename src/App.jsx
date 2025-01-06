@@ -1,26 +1,58 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-
-import LoginRegisterPage from "./Pages/LoginRegisterPage"
-import HomePage from "./Pages/HomePage"
+import LoginRegisterPage from "./Pages/LoginRegisterPage";
+import HomePage from "./Pages/HomePage";
 import ProductPage from "./Pages/ProductPage";
 import ProductsPage from "./Pages/ProductsPage";
 import ProfilePage from "./Pages/ProfilePage";
 import YourCartPage from "./Pages/YourCartPage";
 import CheckoutPage from "./Pages/CheckoutPage";
+import NotFoundPage from "./Pages/NotFoundPage";
+import ProtectedRoute from "./Components/ProtectedRoute";
+
 export default function App() {
   return (
     <div>
       <Router>
         <Routes>
+          {/* Public Route */}
           <Route path="/" element={<LoginRegisterPage />} />
-          <Route path="/home" element={<HomePage />} />
-          <Route path="/product" element={<ProductPage />} />
-          <Route path="/allproducts" element={<ProductsPage />} />
-          <Route path="/profile" element={<ProfilePage />} />
-          <Route path="/yourcart" element={<YourCartPage />} />
-          <Route path="/checkout" element={<CheckoutPage />} />
+
+          {/* Protected Routes */}
+          <Route path="/home" element={
+            <ProtectedRoute>
+              <HomePage />
+            </ProtectedRoute>
+          } />
+          <Route path="/product" element={
+            <ProtectedRoute>
+              <ProductPage />
+            </ProtectedRoute>
+          } />
+          <Route path="/allproducts" element={
+            <ProtectedRoute>
+              <ProductsPage />
+            </ProtectedRoute>
+          } />
+          <Route path="/profile" element={
+            <ProtectedRoute>
+              <ProfilePage />
+            </ProtectedRoute>
+          } />
+          <Route path="/yourcart" element={
+            <ProtectedRoute>
+              <YourCartPage />
+            </ProtectedRoute>
+          } />
+          <Route path="/checkout" element={
+            <ProtectedRoute>
+              <CheckoutPage />
+            </ProtectedRoute>
+          } />
+
+          {/* 404 Route - Must be last */}
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Router>
     </div>
-  )
+  );
 }

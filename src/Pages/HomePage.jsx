@@ -2,17 +2,9 @@ import HomeTrendingGrid from "../Components/Home/HomeTrendingGrid"
 import HeroForHomePage from "../Components/Home/HeroForHomePage"
 import Footer from "../Components/Layout/Footer"
 import Header from "../Components/Layout/Header"
-import { useEffect } from "react"
-import { useNavigate } from "react-router-dom"
-function HomePage() {
-    const navigate = useNavigate();
-    const AccessToken = localStorage.getItem('AccessToken')
 
-    useEffect(() => {
-        if (!AccessToken) {
-            navigate('/')
-        }
-    }, [AccessToken, navigate])
+function HomePage() {
+
 
     return (
         <div className="animate-fadeIn">
