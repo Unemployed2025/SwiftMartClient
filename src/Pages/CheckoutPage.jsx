@@ -133,7 +133,7 @@ function CheckoutPage() {
                 // Simulate payment processing
                 await new Promise(resolve => setTimeout(resolve, 2000));
                 setIsLoading(false);
-                emptycart();
+                emptycart(userId);
                 navigate('/profile');
             } catch (error) {
                 console.error('Error procession checkout:', error);

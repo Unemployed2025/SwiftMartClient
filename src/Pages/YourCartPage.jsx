@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { getCart, removefromcart } from '../api/cartRoutes'
-import { getFurnitureById } from '../api/furnitureRoutes'
+// import { getFurnitureById } from '../api/furnitureRoutes'
 import Footer from '../Components/Layout/Footer'
 import Header from '../Components/Layout/Header'
 import Carousell from '../Components/Carousell'
+import { getuserid } from '../api/userRoutes'
 // import ProgressIndicatior from './ProgressIndicatior'
 // import '../styles/cart.css'
 
@@ -17,18 +18,19 @@ export default function YourCartPage() {
   useEffect(() => {
     const getCartfurnitures = async () => {
       try {
+        const response = await getuserid();
+        const id = response.data.id;
         // Get cart IDs
-        const cartResponse = await getCart();
-        const fids = cartResponse.data.cart;
+        const cartResponse = await getCart(id);
 
-        // Fetch all furniture items in parallel
-        const furnitureItems = await Promise.all(
-          fids.map(id => getFurnitureById(id))
-        );
 
         // Set all furniture data at once
-        setFurnitureData(furnitureItems.map(response => response.data));
-        setQuantities(fids.reduce((acc, id) => ({ ...acc, [id]: 1 }), {}));
+        setFurnitureData(cartResponse.data.details);
+        setQuantities(cartResponse.data.details.reduce((acc, item) => {
+          acc[item._id] = 1;
+          return acc;
+        }, {}))
+
       } catch (error) {
         console.error("Error fetching cart items:", error);
       }
@@ -51,10 +53,12 @@ export default function YourCartPage() {
     }))
   }
 
-  const removeFromCart = async (id) => {
+  const removeFromCart = async (fid) => {
     try {
-      await removefromcart(id);
-      setFurnitureData(prevData => prevData.filter(item => item._id !== id));
+      const response = await getuserid();
+      const id = response.data.id;
+      await removefromcart(fid, id);
+      setFurnitureData(prevData => prevData.filter(item => item._id !== fid));
     } catch (error) {
       console.error("Error removing item from cart:", error);
     }
@@ -79,7 +83,7 @@ export default function YourCartPage() {
             {furnitureData.map((item, index) => (
               <div key={index} className="bg-[#FFD65A] rounded-lg shadow-2xl p-8 hover:shadow-amber-100 transition-shadow w-8/12">
                 <div className="flex flex-row gap-24">
-                  <Carousell furniture={item} page={'cart'}/>
+                  <Carousell furniture={item} page={'cart'} />
                   <div className="flex flex-col justify-between flex-1">
                     <div className="space-y-8">
                       <h3 className="text-6xl font-sans text-[#EF6024]">{item.name}</h3>

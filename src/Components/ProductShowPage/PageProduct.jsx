@@ -5,58 +5,71 @@ import { getCart } from "../../api/cartRoutes";
 import { addtocart } from "../../api/cartRoutes";
 import { useNavigate } from "react-router-dom";
 import Carousell from "../Carousell";
+import { getuserid } from "../../api/userRoutes";
 function PageProduct({ furnitureid }) {
 
   const [furnitureData, setFurnitureData] = useState([]);
   const [currentCart, setCurrentCart] = useState([]);
   const TypeOfWood = ['Teak', 'Mahogany', 'Pine', 'Oak', 'Cedar', 'Maple', 'Cherry', 'Walnut', 'Birch', 'Beech', 'Ash', 'Elm', 'Poplar', 'Spruce', 'Fir', 'Cypress', 'Redwood', 'Plywood', 'MDF', 'Particle Board', 'Wicker', 'Rattan', 'Cane', 'Bamboo'];
   const navigate = useNavigate();
+
   const fetchCart = async () => {
     try {
-      const response = await getCart();
-      setCurrentCart(response.data.cart);
+      const response = await getuserid();
+      const id = response.data.id;
+      const responsee = await getCart(id);
+      console.log(responsee.data.details);
+      setCurrentCart(responsee.data.details);
     } catch (error) {
       console.error("Error fetching cart data:", error);
     }
   }
 
-
   useEffect(() => {
-    const obtainFurniture = async (furnitureid) => {
+    const obtainFurniture = async () => {
       try {
         const response = await getFurnitureById(furnitureid);
-        // console.log(response.data);
         setFurnitureData(response.data);
-      }
-      catch (error) {
+      } catch (error) {
         console.error("Error fetching furniture data:", error);
       }
     };
-    obtainFurniture(furnitureid);
+    obtainFurniture();
     fetchCart();
-  }, [furnitureid])
+  }, [furnitureid]);
 
   const randomWoodGiver = () => {
     let randIndex = Math.floor(Math.random() * TypeOfWood.length);
     return TypeOfWood[randIndex];
-  }
+  };
+
   const addToCart = async (productid) => {
     try {
-      const response = await addtocart(productid);
-      setCurrentCart(response.data.cart);
+      const response = await getuserid();
+      const id = response.data.id;
+      await addtocart(productid, id);
+      // Fetch updated cart after adding item
+      const cartResponse = await getCart(id);
+      setCurrentCart(cartResponse.data.details);
     } catch (error) {
       console.error("Error adding to cart:", error);
+      alert("Failed to add to cart. Please try again.");
     }
-    // console.log(currentCart);
-  }
+  };
+
   const viewInCart = () => {
     navigate('/yourcart');
-  }
+  };
+
+  useEffect(() => {
+    console.log("Cart updated:", currentCart);
+  }, [currentCart]);
+
   return (
     <div className="flex p-10 bg-[#DDA15E] shadow-md">
       {/* Left: Image Section */}
       <div className="flex-1 ">
-        <Carousell furniture={furnitureData} page={'product'}/>
+        <Carousell furniture={furnitureData} page={'product'} />
       </div>
 
       {/* Right: Details Section */}
@@ -108,7 +121,7 @@ function PageProduct({ furnitureid }) {
             >
               Out of Stock
             </button>
-          ) : currentCart.some((item) => item === furnitureData._id) ? (
+          ) : currentCart.some((item) => item._id === furnitureData._id) ? (
             <button
               className="mt-4 w-10/12 py-2 bg-green-600 text-white rounded-md hover:bg-green-700"
               onClick={viewInCart}
@@ -137,7 +150,6 @@ function PageProduct({ furnitureid }) {
           </div>
         )}
       </div>
-      {/* {console.log(furnitureData.image[0].url)} */}
     </div>
   );
 }
@@ -146,4 +158,3 @@ PageProduct.propTypes = {
 };
 
 export default PageProduct;
-
