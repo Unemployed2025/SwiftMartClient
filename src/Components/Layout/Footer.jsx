@@ -2,7 +2,6 @@ import mailIcon from '../../assets/mail.png';
 import phoneIcon from '../../assets/Phone.png';
 import instagramIcon from '../../assets/Instagram.png';
 import twitterIcon from '../../assets/Twitter.png';
-import logo from'../../assets/Block.png';
 import PropTypes from 'prop-types';
 function Footer({page}) {
 
@@ -27,7 +26,7 @@ function Footer({page}) {
     return (
         <div className={`w-full mx-auto ${footerBg} flex justify-around items-center animate-fadeIn`}>
             <div className=''>
-                <img src={logo} alt="" />
+                <img src="./logo3.png" alt="" className='w-10'/>
             </div>
             <div className='p-9'>
                 <h1 className="text-xl hover-underline">Contact us</h1>

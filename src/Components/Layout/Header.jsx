@@ -1,4 +1,3 @@
-import LogoIcon from '../../assets/Block.png';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { logout } from '../../api/userRoutes';
@@ -55,7 +54,7 @@ function Header({ page }) {
     }
     return (
         <header className={`${headerBg} top-0 w-full py-4 px-10 font-serif flex items-center justify-between z-50 animate-fadeIn`}>
-            <img src={LogoIcon} alt="Logo of APP" className="h-6" />
+            <img src="./logo2.svg" alt="Logo of APP" className="h-6" />
             <nav>
                 <ul className="flex list-none space-x-4 m-0 p-0">
                     <li>

@@ -34,8 +34,23 @@ function LoginRegisterPage() {
                 navigate('/home');
             }
         } catch (error) {
-            setMessage(error.response?.data?.message || "An error occurred");
-            setTimeout(() => setMessage(''), 3000); // Clear message after 3 seconds
+            const messages = [
+                error.response?.data?.message || "An error occurred",
+                "Register if you don't have an account"
+            ];
+            let index = 0;
+
+            const showNextMessage = () => {
+                if (index < messages.length) {
+                    setMessage(messages[index]);
+                    index++;
+                    setTimeout(showNextMessage, 2000);
+                } else {
+                    setMessage('');
+                }
+            };
+
+            showNextMessage();
         } finally {
             setIsLoading(false);
         }
