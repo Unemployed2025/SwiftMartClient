@@ -29,8 +29,8 @@ function OrderPlaced({ UserData, setRefresh }) {
   }
 
   return (
-    <div className="bg-[#FF4D6D] min-h-screen p-6 border-y-4 border-pink-800">
-      <h2 className="text-black text-3xl font-sans ml-20 my-16">Order’s Placed by you</h2>
+    <div className="bg-[#FF4D6D] p-24 border-b-4 border-pink-800">
+      <h2 className="text-3xl font-sans mb-20">Order’s Placed by you</h2>
       <OrderPlacedCard boughtfurnitures={boughtfurnitures} id={UserData._id} setRefresh={setRefresh} />
     </div>
   );

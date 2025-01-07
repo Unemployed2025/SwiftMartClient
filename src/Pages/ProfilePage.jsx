@@ -6,6 +6,7 @@ import Footer from '../Components/Layout/Footer'
 import { getuserid } from '../api/userRoutes'
 import { byid } from '../api/userRoutes'
 import { useEffect, useState } from 'react'
+import ListedFurniture from '../Components/YourProfilePage/ListedFurniture'
 function ProfilePage() {
     const [UserData, setUserData] = useState(null)
     const [isloading, setIsLoading] = useState(true)
@@ -38,6 +39,7 @@ function ProfilePage() {
             {UserData && <HeroBasic UserData={UserData} />}
             {UserData && <OrderPlaced UserData={UserData} refresh={refresh} setRefresh={setRefresh} />}
             {UserData && <UserReview UserData={UserData} refresh={refresh} />}
+            {UserData && <ListedFurniture UserData={UserData} refresh={refresh} setRefresh={setRefresh}/>}
             <Footer page={"profile"} />
         </div>
     )

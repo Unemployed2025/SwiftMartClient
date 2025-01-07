@@ -1,22 +1,31 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { login, register } from '../api/userRoutes';
 
 import '../styles/login.css';
 
 function LoginRegisterPage() {
+
+    const navigate = useNavigate();
+    
+    //If the user is already logged in then the user will be navigated to the home page
+    useEffect(() => {
+        if (localStorage.getItem("AccessToken")) {
+            navigate('/home');
+        }
+    }, [navigate]);
+
+
     const [isLogin, setIsLogin] = useState(true);
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-    const navigate = useNavigate();
     const toggleForm = () => {
         setIsLogin(!isLogin);
         setMessage('');
     };
-
     async function handleSubmit(e) {
         e.preventDefault();
         setIsLoading(true);

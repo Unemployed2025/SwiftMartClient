@@ -46,3 +46,14 @@ export const addReviewUser = async (uid, rid) => {
     const response = await api.patch(`/user/${uid}/addreview`, { reviewId: rid });
     return response;
 }
+
+export const getlistedfurniture = async (id) => {
+    const response = await api.get(`/user/${id}/listedfurniture`);
+    return response;
+}
+
+export const addListedFurniture = async (id, furnitureId) => {
+    const response = await api.patch(`/user/${id}/addnewfurniture`, { furnitureId });
+    console.log(response.data);
+    return response;
+}

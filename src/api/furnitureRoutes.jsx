@@ -25,3 +25,15 @@ export const addReview = async (rid, fid) => {
     const response = await api.patch(`/furniture/${fid}/addreview`, { reviewId: rid });
     return response;
 }
+
+export const addNewFurniture = async (data) => {
+    // for (const pair of data.entries()) {
+    //     console.log(pair[0], pair[1]);
+    // }
+    const response = await api.post(`/furniture/add?admin=true`, data, {
+        headers: {
+            "Content-Type": "multipart/form-data",
+        },
+    });
+    return response;
+}
