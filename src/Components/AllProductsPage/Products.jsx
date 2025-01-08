@@ -2,20 +2,28 @@ import { useEffect, useState } from "react";
 import PageProduct from "./PageProduct";
 import { getAllFurniture } from "../../api/furnitureRoutes";
 import { useNavigate } from "react-router-dom";
+import LoadingComponent from "../LoadingComponent";
 function Products() {
 
     const [furnitures, setFurnitures] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
+    const [isLoading , setIsLoading] = useState(true);
+
     const itemsPerPage = 2;
     const navigate = useNavigate();
     
     useEffect(() => {
         const fetchFurnitures = async () => {
+
+            setIsLoading(true);
+
             try {
                 const response = await getAllFurniture();
                 setFurnitures(response.data);
             } catch (error) {
                 console.error(error);
+            } finally {
+                setIsLoading(false);
             }
         };
         fetchFurnitures();
@@ -41,6 +49,12 @@ function Products() {
     const handleClick = (furnitureid) => {
         navigate("/product", { state: { furnitureid } });
     };
+
+    if (isLoading) {
+        return <LoadingComponent message="Loading products..." />;
+    }
+
+
     return (
         <>
             <div className="">

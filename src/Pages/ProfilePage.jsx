@@ -7,6 +7,7 @@ import { getuserid } from '../api/userRoutes'
 import { byid } from '../api/userRoutes'
 import { useEffect, useState } from 'react'
 import ListedFurniture from '../Components/YourProfilePage/ListedFurniture'
+import LoadingComponent from '../Components/LoadingComponent'
 function ProfilePage() {
     const [UserData, setUserData] = useState(null)
     const [isloading, setIsLoading] = useState(true)
@@ -30,7 +31,7 @@ function ProfilePage() {
     }, []);
 
     if (isloading) {
-        return <div>Loading ...</div>
+        <LoadingComponent message="User Profile Loading..."/>
     }
 
     return (
@@ -39,7 +40,7 @@ function ProfilePage() {
             {UserData && <HeroBasic UserData={UserData} />}
             {UserData && <OrderPlaced UserData={UserData} refresh={refresh} setRefresh={setRefresh} />}
             {UserData && <UserReview UserData={UserData} refresh={refresh} />}
-            {UserData && <ListedFurniture UserData={UserData} refresh={refresh} setRefresh={setRefresh}/>}
+            {UserData && <ListedFurniture UserData={UserData} refresh={refresh} setRefresh={setRefresh} />}
             <Footer page={"profile"} />
         </div>
     )

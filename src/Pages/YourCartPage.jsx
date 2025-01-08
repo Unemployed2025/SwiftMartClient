@@ -6,6 +6,7 @@ import Footer from '../Components/Layout/Footer'
 import Header from '../Components/Layout/Header'
 import Carousell from '../Components/Carousell'
 import { getuserid } from '../api/userRoutes'
+import LoadingComponent from '../Components/LoadingComponent'
 // import ProgressIndicatior from './ProgressIndicatior'
 // import '../styles/cart.css'
 
@@ -13,26 +14,38 @@ export default function YourCartPage() {
 
   const [furnitureData, setFurnitureData] = useState([]) // this is array of furniture objects
   const [quantities, setQuantities] = useState({}) // this is json object with key as furniture id and value as quantity
+  const [isLoading, setIsLoading] = useState(true);
+
   const navigate = useNavigate()
 
   useEffect(() => {
     const getCartfurnitures = async () => {
+
+      setIsLoading(true);
+
       try {
+
         const response = await getuserid();
         const id = response.data.id;
+
         // Get cart IDs
         const cartResponse = await getCart(id);
 
 
         // Set all furniture data at once
         setFurnitureData(cartResponse.data.details);
+
+
         setQuantities(cartResponse.data.details.reduce((acc, item) => {
           acc[item._id] = 1;
           return acc;
         }, {}))
 
+
       } catch (error) {
         console.error("Error fetching cart items:", error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -66,6 +79,10 @@ export default function YourCartPage() {
 
   const gotoCheckout = () => {
     navigate('/checkout', { state: { furnitureData, quantities } })
+  }
+
+  if (isLoading) {
+    return <LoadingComponent message="Loading your cart..." />;
   }
 
   return (
