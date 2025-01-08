@@ -31,7 +31,12 @@ function ProfilePage() {
     }, []);
 
     if (isloading) {
-        return <LoadingComponent message="User Profile Loading..."/>
+        return (
+            <><LoadingComponent message="User Profile Loading..." />
+                <Header page={"profile"} />
+                <Footer page={"profile"} />
+            </>
+        )
     }
 
     return (
