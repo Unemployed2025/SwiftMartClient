@@ -31,7 +31,7 @@ function ProfilePage() {
     }, []);
 
     if (isloading) {
-        <LoadingComponent message="User Profile Loading..."/>
+        return <LoadingComponent message="User Profile Loading..."/>
     }
 
     return (
