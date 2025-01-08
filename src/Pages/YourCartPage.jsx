@@ -82,13 +82,20 @@ export default function YourCartPage() {
   }
 
   if (isLoading) {
-    return <LoadingComponent message="Loading your cart..." />;
-  }
+    return (
+      <>
+        <Header page={"cart"} />
+        <LoadingComponent message="Loading your cart..." />
+        <Footer page={"cart"} />
+      </>
+    );
+  };
 
   return (
     <>
       <Header page={"cart"} />
       <div className="mx-auto p-10 bg-[#363432] animate-fadeIn">
+
 
         {furnitureData.length === 0 ? (
           <div className="text-center py-10 my-16">
